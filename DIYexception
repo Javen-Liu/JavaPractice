@@ -1,0 +1,93 @@
+public class MyStringBufferDemo {
+    private int length;
+    private int capacity;
+    private char[] vaule = null;
+    public MyStringBufferDemo(int c){
+        capacity = c;
+        vaule = new char[capacity];
+    }
+
+    class IndexIsOutofRangeException extends Exception{
+        public IndexIsOutofRangeException(String s){
+            super(s);
+        }
+    }
+
+    class IndexIsNagetiveExcepiton extends Exception{
+        public IndexIsNagetiveExcepiton(String s){
+            super(s);
+        }
+    }
+
+    class NullPointerException extends Exception{
+        public NullPointerException(String s){
+            super(s);
+        }
+    }
+
+    public void insert(char c,int i) throws IndexIsOutofRangeException,IndexIsNagetiveExcepiton{
+        if(i>=capacity){
+            throw new IndexIsOutofRangeException("超出容量范围\n");
+        }
+        if(i<0){
+            throw new IndexIsNagetiveExcepiton("插入序号为负\n");
+        }
+        vaule[i] = c;
+        length++;
+        System.out.print("插入成功！\n");
+    }
+
+    public char search(int i) throws IndexIsOutofRangeException,IndexIsNagetiveExcepiton,NullPointerException{
+        if(i>=capacity){
+            throw new IndexIsOutofRangeException("超出容量范围\n");
+        }
+        if(i<0){
+            throw new IndexIsNagetiveExcepiton("插入序号为负\n");
+        }
+        if(i>length){
+            throw new NullPointerException("寻找指针不存在或超出范围\n");
+        }
+        System.out.print("获取数据成功\n");
+        return vaule[i];
+    }
+
+    public static void main(String arg[]){
+        MyStringBufferDemo stringBuffer = new MyStringBufferDemo(10);
+        try {
+            stringBuffer.insert('a',3);
+        } catch (IndexIsOutofRangeException e) {
+            e.printStackTrace();
+        } catch (IndexIsNagetiveExcepiton n) {
+            n.printStackTrace();
+        }
+
+        try {
+            stringBuffer.insert('s',14);
+        } catch (IndexIsOutofRangeException e) {
+            e.printStackTrace();
+        } catch (IndexIsNagetiveExcepiton indexIsNagetiveExcepiton) {
+            indexIsNagetiveExcepiton.printStackTrace();
+        }
+
+        try {
+            char c1 = stringBuffer.search(3);
+        } catch (IndexIsOutofRangeException e) {
+            e.printStackTrace();
+        } catch (IndexIsNagetiveExcepiton indexIsNagetiveExcepiton) {
+            indexIsNagetiveExcepiton.printStackTrace();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            char c2 = stringBuffer.search(1);
+        } catch (IndexIsOutofRangeException e) {
+            e.printStackTrace();
+        } catch (IndexIsNagetiveExcepiton indexIsNagetiveExcepiton) {
+            indexIsNagetiveExcepiton.printStackTrace();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+    }
+
+}
