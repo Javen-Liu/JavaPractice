@@ -1,0 +1,53 @@
+public class BankAccountDemo {
+    private double balance;
+
+    public BankAccountDemo(double b){
+        this.balance = b;
+    }
+
+    class OverdraftException extends Exception{
+        private double deficit;
+        public OverdraftException(String s,double d){
+            super(s+d+"元\n");
+            deficit = d;
+        }
+        public double getDeficit(){
+            return deficit;
+        }
+    }
+
+    public double getBalance(){
+        return balance;
+    }
+
+    public void deposit(double i){
+        balance += i;
+        System.out.println("您的账户已存入"+i+"元,余额为"+balance+"\n");
+    }
+
+    public void withdraw(double i) throws OverdraftException{
+        if(i>balance){
+            double d = i-balance;
+            balance = 0;
+            throw new OverdraftException("余额不足!您的透支额为",d);
+        }
+        balance -= i;
+        System.out.println("您的账户已取出"+i+"元,余额为"+balance+"\n");
+    }
+
+    public static void main(String arg[]){
+        BankAccountDemo ba = new BankAccountDemo(1000.00);
+        ba.deposit(100.5);
+        System.out.println(ba.getBalance()+"\n");
+        try {
+            ba.withdraw(1000);
+        } catch (OverdraftException e) {
+            e.printStackTrace();
+        }
+        try {
+            ba.withdraw(500);
+        } catch (OverdraftException e) {
+            e.printStackTrace();
+        }
+    }
+}
