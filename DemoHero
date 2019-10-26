@@ -1,0 +1,53 @@
+public class DemoHero {
+    private String name = new String();
+    private int hp;
+
+    public DemoHero(String n,int h){
+        this.name = n;
+        this.hp = h;
+    }
+
+    public void setName(String s){
+        name = s;
+    }
+    public void setHp(int h){
+        hp = h;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public int getHp(){
+        return hp;
+    }
+
+    public void attack(DemoHero dh) throws HeroIsDead {
+        if(dh.getHp()>0){
+            dh.setHp(dh.getHp()-10);
+        }else{
+            throw new HeroIsDead(dh.name);
+        }
+    }
+
+    public static void main(String arg[]) throws HeroIsDead{
+        DemoHero jugg = new DemoHero("juggnant",50);
+        DemoHero axe = new DemoHero("Axe",60);
+        while(jugg.getHp()>=0&&axe.getHp()>=0){
+            try{
+                jugg.attack(axe);
+                System.out.print("juggnant has attack Axe, Axe has "+axe.getHp()+" hp left\n");
+            }catch (HeroIsDead h1){
+                h1.printStackTrace();
+                break;
+            }
+            try{
+                axe.attack(jugg);
+                System.out.print("Axe has attack juggnant, juggnant has "+jugg.getHp()+" hp left\n");
+            }catch (HeroIsDead h2){
+                h2.printStackTrace();
+                break;
+            }
+        }
+    }
+}
