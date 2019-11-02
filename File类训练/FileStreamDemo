@@ -1,0 +1,40 @@
+import java.io.*;
+
+public class FileStreamDemo {
+    public static void main(String[] args){
+        /**
+         * 打开文件并创建输入流
+         * 通过fis.read()将字节读取到创建好的bytes中去
+         * 读取出来的都是ASCII码
+         */
+//        File file = new File("D:\\Documents\\IDEAWorkSpace\\TextDemo.txt");
+//        try{
+//            FileInputStream fis = new FileInputStream(file);
+//            byte[] bytes = new byte[(int)file.length()];
+//            fis.read(bytes);
+//            for(byte b:bytes){
+//                System.out.print(b);
+//            }
+//            fis.close();
+//        } catch (IOException e){
+//            e.printStackTrace();
+//        }
+        /**
+         * 创建File类，并且创建输出流
+         * 如果要输出到指定目录的文件中，但目录的父目录不存在
+         * 通过anotherFile.getParentFile()的父目录
+         * 然后通过mkdirs()方法创建父目录
+         * ！！不能使mkdir()方法，该方法如果父目录不存在就不会创建
+         */
+        try{
+            File anotherFile = new File("D:\\Documents\\IDEAWorkSpace\\Test\\Test.txt");
+            anotherFile.getParentFile().mkdirs();
+            FileOutputStream fos = new FileOutputStream(anotherFile);
+            byte[] bytes = {65,66};
+            fos.write(bytes);
+            fos.close();
+        } catch (IOException f){
+            f.printStackTrace();
+        }
+    }
+}
