@@ -1,0 +1,36 @@
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+
+public class SplitFileDemo {
+    public static void main(String[] args) throws Exception {
+        File file = new File("C:\\WINDOWS\\pyw.exe");
+        FileInputStream fis = new FileInputStream(file);
+        byte[] content = new byte[(int)file.length()];
+        fis.read(content);
+        fis.close();
+        int pFileCap = 1024*100;
+        int pFileNum = (int)file.length()/pFileCap;
+        for(int i=0;i<=pFileNum;i++){
+            byte[] pFileCon;
+            if(i==pFileNum){
+                pFileCon = new byte[(int)file.length()-i*pFileCap];
+                System.arraycopy(content,i*pFileCap,pFileCon,0,(int)file.length()-i*pFileCap);
+            }
+            else{
+                pFileCon = new byte[pFileCap];
+                System.arraycopy(content,i*pFileCap,pFileCon,0,pFileCap);
+            }
+            File file1 = new File("D:\\Documents\\IDEAWorkSpace\\Test\\outputfile.exe-"+(i+1));
+            FileOutputStream fos = new FileOutputStream(file1);
+            try{
+                fos.write(pFileCon);
+                System.out.println("outputfile.exe-"+(i+1)+"输出成功，其大小为"+pFileCon.length+"字节");
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            fos.close();
+        }
+    }
+}
