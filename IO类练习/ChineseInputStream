@@ -1,0 +1,36 @@
+import java.io.BufferedInputStream;
+import java.io.*;
+
+/**
+ * @author 刘建雯
+ */
+public class ChineseInputStream {
+    public static void main(String[] args){
+        File file = new File("d:\\Documents\\IDEAWorkSpace\\ChineseInputStream.txt");
+        byte[] content = null;
+        try(BufferedInputStream bi = new BufferedInputStream(new FileInputStream(file))) {
+            content = new byte[(int)file.length()];
+            bi.read(content);
+        } catch (FileNotFoundException e) {
+            System.out.println("未找到文件");;
+        } catch (IOException e) {
+            System.out.println("文件IO出现问题");;
+        }
+
+        assert content != null;
+        System.out.println("文件读取出来的内容为:");
+        for(byte value:content){
+            int i = value&0xff;
+            System.out.print(Integer.toHexString(i)+"\t");
+        }
+        System.out.println();
+
+        try {
+            String ch = new String(content,"GBK");
+            System.out.println(ch);
+        } catch (UnsupportedEncodingException e) {
+            System.out.println("编码出现错误");
+        }
+
+    }
+}
