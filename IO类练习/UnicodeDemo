@@ -1,0 +1,32 @@
+import java.io.UnsupportedEncodingException;
+
+/**
+ * @author 刘建雯
+ */
+public class UnicodeDemo {
+    public static void main(String[] args) {
+        String str = "中";
+        showCode(str);
+    }
+
+    private static void showCode(String str){
+        String[] encodes = {"BIG5", "GBK", "GB2312", "UTF-8", "UTF-16", "UTF-32"};
+        for(String value:encodes){
+            showCode(str,value);
+        }
+    }
+
+    private static void showCode(String str,String encode){
+        System.out.print("汉字\""+str+"%s\"的编码方式\""+encode+"\"下的十六进制值是:\n");
+        try {
+            byte[] all = str.getBytes(encode);
+            for(byte value:all){
+                int i = value&0xff;
+                System.out.print(Integer.toHexString(i)+"\t");
+            }
+            System.out.println();
+        } catch (UnsupportedEncodingException e) {
+            System.out.println(str+"在"+encode+"编码方式下的解析出现错误");
+        }
+    }
+}
