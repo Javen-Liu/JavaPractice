@@ -1,0 +1,59 @@
+import java.io.*;
+
+/**
+ * @author 刘建雯
+ */
+
+public class InAndOut {
+    public static void main(String[] args) throws IOException {
+        File file = new File("d:\\Documents\\IDEAWorkSpace\\InAndOurTest.txt");
+        file.getParentFile().mkdirs();
+        file.createNewFile();
+        int[] content = {31,15};
+        InAndOut.writeStr(content,file,"@");
+        int[] outputContents = InAndOut.readInt(file,"@");
+        for(int value:outputContents){
+            System.out.println(value);
+        }
+    }
+
+    public static void writeStr(int[] num,File file,String flag){
+        if(num == null){
+            return;
+        }
+        String content = InAndOut.intSpliceStr(num);
+        try(FileWriter fw = new FileWriter(file)){
+            fw.write(content);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static int[] readInt(File file,String flag){
+        String[] str = null;
+        try(BufferedReader br = new BufferedReader(new FileReader(file))){
+            str = br.readLine().split(flag);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        assert str != null;
+        int[] splitNum = new int[str.length];
+        for(int i=0;i<str.length;i++){
+            splitNum[i] = Integer.parseInt(str[i]);
+        }
+        return splitNum;
+    }
+
+    public static String intSpliceStr(int[] num){
+        String str = new String();
+            for(int i=0;i<num.length;i++){
+                if(i<num.length-1){
+                    str = str + (num[i]+"@");
+                }else{
+                    str = str + num[i];
+                }
+            }
+        assert str != null;
+        return str;
+    }
+}
