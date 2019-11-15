@@ -1,0 +1,34 @@
+package serializableobject;
+
+import java.io.*;
+
+/**
+ * @author 刘建雯
+ */
+
+public class SerializableStream {
+    public static void main(String[] args) throws IOException {
+        String[] heroName = {"invoker","silencer","spiritBreaker","shadowFiend","antiMage"};
+        int[] heroHp = {580,560,650,480,500};
+        int[] heroMp = {380,440,340,350,330};
+        Hero[] heroes = new Hero[5];
+        for(int i=0;i<5;i++){
+            heroes[i] = new Hero(heroName[i],heroHp[i],heroMp[i]);
+        }
+        File file = new File("d:\\Documents\\IDEAWorkSpace\\Test\\hero.dota2");
+        file.getParentFile().mkdirs();
+        file.createNewFile();
+        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))){
+            oos.writeObject(heroes);
+            Hero[] heroes1 = (Hero[]) ois.readObject();
+            for(int i=0;i<5;i++){
+                System.out.println(heroes[i].getHeroName().equals(heroes1[i].getHeroName()));
+                System.out.println(heroes[i].getHeroHp()==heroes1[i].getHeroHp());
+                System.out.println(heroes[i].getHeroMp()==heroes1[i].getHeroMp());
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+}
