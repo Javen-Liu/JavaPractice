@@ -1,0 +1,84 @@
+import org.jetbrains.annotations.NotNull;
+
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+/**
+ * @author 刘建雯
+ */
+
+public class FileDecoding {
+    public static void main(String[] args){
+        File decodingFile = new File("d:\\Documents\\IDEAWorkSpace\\codedFile.txt");
+        File decodedFile = new File("d:\\Documents\\IDEAWorkSpace\\decodedFile.txt");
+        decodedFile.getParentFile().mkdirs();
+        char[] content = new char[(int)decodingFile.length()];
+        //读取文件内容
+        try(FileReader fr = new FileReader(decodingFile)) {
+            fr.read(content);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.print("解密前的内容:");
+        for(char value:content){
+            System.out.print(value);
+        }
+        System.out.println();
+
+        //解密内容
+        decode(content);
+        System.out.print("解密后的内容:");
+        for(char value:content){
+            System.out.print(value);
+        }
+
+        //尝试写入解密的内容到文件
+        try(FileWriter fw = new FileWriter(decodedFile)){
+            fw.write(content);
+            fw.flush();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private static void decode(@NotNull char[] c){
+        for(int i=0;i<c.length;i++){
+            if(isDigitOrLetter(c[i])){
+                int flag = isSpecialWord(c[i]);
+                switch(flag){
+                    case 1:
+                        c[i] = '9';
+                        break;
+                    case 2:
+                        c[i] = 'z';
+                        break;
+                    case 3:
+                        c[i] = 'Z';
+                        break;
+                    default:
+                        c[i]--;
+                        break;
+                }
+            }
+        }
+    }
+
+    private static boolean isDigitOrLetter(char c){
+        String mark = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        return mark.contains(String.valueOf(c));
+    }
+
+    private static int isSpecialWord(char c){
+        if(c == '0'){
+            return 1;
+        }else if(c == 'a'){
+            return 2;
+        }else if(c == 'A'){
+            return 3;
+        }
+        return 0;
+    }
+}
