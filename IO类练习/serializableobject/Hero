@@ -1,0 +1,50 @@
+package serializableobject;
+
+import java.io.Serializable;
+
+/**
+ * @author 刘建雯
+ */
+
+public class Hero implements Serializable {
+    private final static long CURRENT_VISIONUID = 1L;
+    private String heroName;
+    private int heroHp;
+    private int heroMp;
+
+    public Hero(String name,int hp,int mp){
+        heroName = name;
+        heroHp = hp;
+        heroMp = mp;
+    }
+
+    public Hero(){
+        heroName = null;
+        heroHp = 0;
+        heroMp = 0;
+    }
+
+    public void setHeroHp(int heroHp) {
+        this.heroHp = heroHp;
+    }
+
+    public void setHeroMp(int heroMp) {
+        this.heroMp = heroMp;
+    }
+
+    public void setHeroName(String heroName) {
+        this.heroName = heroName;
+    }
+
+    public int getHeroHp() {
+        return heroHp;
+    }
+
+    public int getHeroMp(){
+        return heroMp;
+    }
+
+    public String getHeroName() {
+        return heroName;
+    }
+}
