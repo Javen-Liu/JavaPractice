@@ -1,0 +1,46 @@
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+
+/**
+ * @author 刘建雯
+ */
+
+public class PracticeDemo {
+    public static void main(String[] args) {
+        byte[] content = {(byte)0xe5,(byte)0xb1,(byte)0x8c};
+        String ch = null;
+        ch = new String(content, StandardCharsets.UTF_8);
+        System.out.println(ch);
+
+        File file = new File("d:\\Documents\\IDEAWorkSpace\\ChineseInputStream2.txt");
+        try(BufferedInputStream bi = new BufferedInputStream(new FileInputStream(file))){
+            byte[] all = new byte[(int)file.length()];
+            bi.read(all);
+            for(byte value:all){
+                int i = value&0xff;
+                System.out.print(Integer.toHexString(i)+"\t");
+            }
+            System.out.println();
+
+            byte[] all1 = new byte[all.length-4];
+            int[] allInt = new int[4];
+            for(int i=0;i<4;i++){
+                allInt[i] = all[i]&0xff;
+            }
+
+            if(allInt[0]==0xef&&allInt[1]==0xbb&&allInt[2]==0xbf&&allInt[3]==0xe5){
+//                byte[] all2 = new byte[all.length-2];
+                System.arraycopy(all,4,all1,0,all1.length);
+                for(byte value:all1){
+                    int i =value&0xff;
+                        System.out.print(Integer.toHexString(i)+"\t");
+                }
+
+
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
