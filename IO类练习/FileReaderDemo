@@ -1,0 +1,27 @@
+import java.io.*;
+
+/**
+ * @author 刘建雯
+ */
+public class FileReaderDemo {
+    public static void main(String[] args){
+        File file = new File("d:\\Documents\\IDEAWorkSpace\\123.txt");
+        char[] content = new char[(int)file.length()];
+        try(FileReader fr = new FileReader(file)){
+            fr.read(content);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        for(char value:content){
+            System.out.print(value);
+        }
+
+        String s = new String("safsdfgfdsgaefdsdfga");
+        try(FileWriter fw = new FileWriter(file)){
+            char[] c = s.toCharArray();
+            fw.write(c);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+}
