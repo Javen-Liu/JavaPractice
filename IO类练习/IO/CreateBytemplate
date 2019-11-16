@@ -1,28 +1,51 @@
 package io.System.in;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.Scanner;
 
 /**
  * @author 刘建雯
  */
 
-public class SystemIn {
-    public static void main(String[] args) {
-//        try(InputStream is = System.in){
-//            while(true){
-//                int i = is.read();
-//                System.out.println(i);
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
+public class CreateBytemplate {
+    public static void main(String[] args) throws IOException {
+        File fileTemplate = new File("d:\\Documents\\IDEAWorkSpace\\Test\\template.txt");
         Scanner scanner = new Scanner(System.in);
-        while(true){
-            String line = scanner.nextLine();
-            System.out.println(line);
+        System.out.println("请输入类的名称:");
+        String className = scanner.nextLine();
+        System.out.println("请输入属性的类型:");
+        String type = scanner.nextLine();
+        System.out.println("请输入属性的名称:");
+        String property = scanner.nextLine();
+        char[] typeChar = type.toCharArray();
+        typeChar[0] = Character.toUpperCase(typeChar[0]);
+        String Uproperty = new String(typeChar);
+        String str = "";
+        try(BufferedReader br = new BufferedReader(new FileReader(fileTemplate))){
+            char[] content = new char[(int)fileTemplate.length()];
+            br.read(content);
+            str = new String(content);
+        } catch (FileNotFoundException e) {
+            System.out.println("无法找到指定文件");
+        } catch (IOException e) {
+            System.out.println("IO过程发生错误");
+        }
+
+        str = str.replace("@class@",className);
+        str = str.replace("@type@",type);
+        str = str.replace("@property@",property);
+        str = str.replace("@Uproperty@",Uproperty);
+        System.out.println(str);
+
+        File file = new File("d:\\Documents\\IDEAWorkSpace\\Test\\"+className+".java");
+        file.getParentFile().mkdirs();
+        file.createNewFile();
+        try(BufferedWriter bw = new BufferedWriter(new FileWriter(file))){
+            bw.write(str);
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
+
+
 }
