@@ -1,0 +1,29 @@
+package mystack;
+import ArrayListTest.Hero;
+
+public interface StackInterface {
+    /**
+     * @author [刘建雯]
+     * @Description: [把对象推入到最后位置]
+     * @Param [h为推入的对象]
+     * @Return [void]
+     * @Date [2019/11/23 21:39]
+     */
+    public void push(Hero h);
+    /**
+     * @author [刘建雯]
+     * @Description: [把最后一个对象取出来]
+     * @Param [void]
+     * @Return [将Hero类的对象取出来]
+     * @Date [2019/11/23 21:39]
+     */
+    public Hero pull();
+    /**
+     * @author [刘建雯]
+     * @Description: [添加字符串]
+     * @Param [void]
+     * @Return [查看队列当前最后一个对象]
+     * @Date [2019/11/23 21:39]
+     */
+    public Hero peek();
+}
