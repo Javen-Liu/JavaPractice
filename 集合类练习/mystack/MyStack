@@ -1,0 +1,62 @@
+package mystack;
+import ArrayListTest.Hero;
+import java.util.Arrays;
+import java.util.LinkedList;
+
+/**
+ * @author 刘建雯
+ */
+
+public class MyStack implements StackInterface {
+    private LinkedList<Hero> ll;
+
+    public MyStack(){
+        ll = new LinkedList<>();
+    }
+
+    public MyStack(Hero hero){
+        ll = new LinkedList<>();
+        ll.add(hero);
+    }
+
+    public MyStack(Hero[] heros){
+        ll = new LinkedList<>();
+        ll.addAll(Arrays.asList(heros));
+    }
+
+    @Override
+    public void push(Hero hero) {
+        ll.addLast(hero);
+    }
+
+    @Override
+    public Hero pull() {
+        assert ll != null;
+        Hero hero = ll.getLast();
+        ll.removeLast();
+        return hero;
+    }
+
+    @Override
+    public Hero peek() {
+        if(ll.size() == 0){
+            return null;
+        }
+        return ll.getLast();
+    }
+
+    public static void main(String[] args) {
+        Hero[] hero = new Hero[5];
+        for(int i=0;i<5;i++){
+            hero[i] = new Hero("hero"+(i+1));
+        }
+        MyStack myStack = new MyStack(hero);
+        myStack.push(new Hero("herox"));
+        System.out.println(myStack.peek());
+        System.out.println(myStack.pull());
+        System.out.println(myStack.peek());
+        while(myStack.peek() != null){
+            System.out.print(myStack.pull()+"\t");
+        }
+    }
+}
