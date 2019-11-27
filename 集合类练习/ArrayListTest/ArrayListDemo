@@ -1,0 +1,41 @@
+package ArrayListTest;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * @author 刘建雯
+ */
+
+public class ArrayListDemo {
+    public static void main(String[] args) {
+        ArrayList<Hero> list = new ArrayList<>();
+        for(int i=0;i<5;i++){
+            list.add(new Hero("hero"+i));
+        }
+        list.add(new Hero("specialHero"));
+        String target = "hero2";
+        Hero[] result = ArrayListDemo.check(list,target);
+        if(result.length!=0){
+            System.out.println("找到了name是"+target+"的对象了");
+        }else{
+            System.out.println("未找到name是"+target+"的对象");
+        }
+
+        double a = Integer.MAX_VALUE;
+        float i = (float) Math.pow((1 + 1/ a), a);
+        System.out.println(Math.E == i);
+        System.out.println(i);
+        System.out.println(Math.E);
+    }
+
+    public static Hero[] check(List<Hero> list, String str){
+        ArrayList<Hero> findHero = new ArrayList<>();
+        for(Hero value:list){
+            if(str.equals(value.toString())){
+                findHero.add(list.get(list.indexOf(value)));
+            }
+        }
+        return findHero.toArray(new Hero[]{});
+    }
+}
